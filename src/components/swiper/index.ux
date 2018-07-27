@@ -1,0 +1,33 @@
+<template>
+    <div class="wrapper">
+        <swiper class="swiper" autoplay="{{isAutoPlay}}" interval="{{interval}}" indicator="{{indicator}}" style="indicator-color:{{indicatorColor}};indicator-selected-color:{{indicatorSelectedColor}}">
+            <div class="swiper-img" for="{{swiperImageList}}">
+                <image src="{{$item.url}}"></image>
+            </div>
+        </swiper>
+    </div>
+</template>
+<style>
+    .wrapper {
+        width: 750px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .swiper {
+        width: 99%;
+        height: 400px;
+    }
+
+    .swiper .swiper-img image {
+        width: 100%;
+        height: 100%;
+    }
+</style>
+<script>
+    export default {
+        props: ['swiperImageList', 'isAutoPlay', 'interval', 'indicator', 'indicatorColor', 'indicatorSelectedColor']
+    }
+</script>

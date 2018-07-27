@@ -1,0 +1,197 @@
+<import name="comp-goods-info" src="../../components/goods/index"></import>
+<template>
+    <stack class="home-wrapper">
+        <refresh refreshing="{{refreshing}}" onrefresh="refresh">
+            <list id="list" onscrollbottom="renderMoreListItem" class="list-wrapper" onscroll="scroll">
+                <block for="goodsList">
+                    <list-item type="goods" class="list-item">
+                        <comp-goods-info goods-image="{{$item.goods_image}}" goods-title="{{$item.goods_title}}" goods-price="{{$item.goods_price}}"></comp-goods-info>
+                    </list-item>
+                </block>
+                <list-item type="loadStatus" class="load-status">
+                    <progress type="circular" show="{{hasMoreData}}"></progress>
+                    <text class="loading" show="{{hasMoreData}}">加载更多...</text>
+                    <text show="{{!hasMoreData}}">没有更多了~</text>
+                </list-item>
+            </list>
+        </refresh>
+        <div class="scroll-top {{iconStyle}}" if="{{showTop}}" onclick="scrollToTop">
+            <image src="/assets/top.png"></image>
+        </div>
+    </stack>
+</template>
+<style>
+    .home-wrapper{
+        flex-direction: column;
+    }
+    .list-wrapper{
+        width: 750px;
+        height: 100%;
+        flex-direction: column;
+        columns: 2;
+    }
+    .list-item{
+        height: 500px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 20px;
+    }
+    .load-status{
+        display: flex;
+        height: 100px;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        column-span: 2;
+    }
+    .scroll-top{
+        margin-top: 800px;
+        margin-left: 650px;
+        display: flex;
+        flex-direction: column;
+        width: 80px;
+        height: 80px;
+        align-items: center;
+        justify-content: center;
+        background-color: #f2f2f2;
+        border: 1px solid #f2f2f2;
+        border-radius: 80px;
+    }
+    .scroll-top image{
+        width: 50px;
+        height: 50px;
+    }
+    .showIcon {       
+        animation-name: showIcon;
+        animation-duration: 200ms;
+        animation-timing-function: linear;
+    }
+    
+    @keyframes showIcon {
+        0% {
+            transform: translateY(1000px);
+            }
+        100% {
+            transform: translateY(800px);
+        }
+    }
+    .hideIcon {       
+        animation-name: hideIcon;
+        animation-duration: 200ms;
+        animation-timing-function: linear;
+    }
+    
+    @keyframes hideIcon {
+        0% {
+            transform: translateY(800px);
+            }
+        100% {
+            transform: translateY(1000px);
+        }
+    }
+</style>
+<script>
+    import fetch from '@system.fetch'
+    let memList = []
+    export default {
+        props: ['title'],
+        data: {
+            type: '',//那一个类目，推荐、时尚、女装...
+            refreshing: false,//是否刷新
+            hasMoreData: true,
+            isLoadingData: false,//是否加载数据
+            goodsList: [],
+            size: 4,
+            scrollY: 0,
+            currentY: 0,
+            showTop: false,
+            iconStyle: ''
+        },
+        onInit() {
+            switch (this.title) {
+                case '推荐':
+                    this.type='推荐';
+                    break;
+                case '时尚':
+                    this.type = '时尚';
+                    break;
+                case '女装':
+                    this.type = '女装';
+                    break;
+                default:
+                    this.type = '推荐';
+                    break;
+            };
+            this.loadAndRender();
+            this.showTop = false;
+        },
+        refresh() {
+            this.refreshing = true;
+            memList = [];
+            this.goodsList = [];
+            this.loadAndRender();
+        },
+        loadAndRender(doRender = true) {
+            this.isLoadingData = true;
+            this.getData(
+                function(resList){
+                    this.isLoadingData = false;
+                    this.refreshing = false;
+                    if(!resList){
+                        console.error('数据请求错误')
+                    }else if(!resList.list.length){
+                        this.hasMoreData = false;//没有数据了
+                    }else {
+                        memList = memList.concat(resList.list);
+                        if(doRender){
+                            this._renderList()
+                        }
+                    }
+                }.bind(this)
+            )
+        },
+        _renderList() {
+            if(memList.length > 0){
+                const list = memList.splice(0,this.size);
+                this.goodsList = this.goodsList.concat(list)
+            }
+            if(memList.length <= this.size){
+                //提前获取更多数据
+                this.loadAndRender(false)
+            }
+        },
+        renderMoreListItem() {
+            if(!this.isLoadingData){
+                this._renderList();
+            }
+        },
+        getData(cb){
+            fetch && fetch.fetch({
+                url: 'http://apk.gou.3gtest.gionee.com/api/apk_index/taoHot',
+                success: function (result) {
+                    let res = JSON.parse(result.data);
+                    cb(res.data);
+                },
+                fail: function (result, code) {
+                    console.log(`handing fail,code=${code}`);
+                    cb([]);
+                }
+            })
+        },
+        scroll(evt ){
+            this.scrollY += evt.scrollY;
+            console.log(this.scrollY)
+            if( this.scrollY > 750 && evt.scrollY < 0){
+                this.showTop = true;
+                this.iconStyle = 'showIcon';
+            }else{
+                this.showTop = false
+                this.iconStyle = 'hideIcon';
+            }
+        },
+        scrollToTop(){
+            this.$element('list').scrollTo({index: 1})//滚动到指定位置
+        }
+    }
+</script>

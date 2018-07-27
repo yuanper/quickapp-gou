@@ -1,0 +1,75 @@
+{
+  "package": "com.gionee.gou",
+  "name": "购物大厅",
+  "versionName": "1.0.0",
+  "versionCode": "1",
+  "minPlatformVersion": "101",
+  "icon": "/Common/logo.png",
+  "features": [
+    {
+      "name": "system.prompt"
+    },
+    {
+      "name": "system.router"
+    },
+    {
+      "name": "system.shortcut"
+    },
+    {
+      "name": "system.fetch"
+    },
+    {
+      "name": "system.webview"
+    }
+  ],
+  "permissions": [
+    {
+      "origin": "*"
+    }
+  ],
+  "config": {
+    "logLevel": "debug",
+    "debug": true
+  },
+  "router": {
+    "entry": "Home",
+    "pages": {
+      "Home": {
+        "component": "index"
+      },
+      "Detail": {
+        "component": "index"
+      },
+      "Address": {
+        "component": "index"
+      },
+      "Category": {
+        "component": "index"
+      }
+    }
+  },
+  "display": {
+    "fullScreen": true,
+    "titleBar": false,
+    "titleBarBackgroundColor": "#f2f2f2",
+    "titleBarTextColor": "#414141",
+    "menu": false,
+    "pages": {
+      "Home": {
+        "titleBar": false,
+        "menu": true
+      },
+      "Detail": {
+        "titleBarText": "详情页",
+        "titleBar": true
+      },
+      "Address": {
+        "titleBarText": "新增收货地址",
+        "titleBar": true
+      },
+      "About": {
+        "menu": false
+      }
+    }
+  }
+}

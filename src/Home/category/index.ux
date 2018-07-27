@@ -1,0 +1,113 @@
+<import name="comp-category-info" src="../../components/categoryInfo/index"></import>
+<import name="comp-swiper" src="../../components/swiper/index"></import>
+<template>
+    <div>
+        <div class="category">
+            <div class="header">
+                <image src="/assets/category-default.png" @click="showCategory"></image>
+                <text class="header-title">分类</text>
+                <image src="/assets/search.png" onclick="search"></image>
+            </div>
+            <list scrollpage="true" id="list">
+                <list-item type="banner">
+                    <comp-swiper swiper-image-list="{{bannerList}}" is-auto-play="{{isAutoPlay}}" interval="{{time}}" indicator="{{isIndicator}}"
+                        indicator-color="{{indicatorColor}}" indicator-selected-color="{{indicatorSelectedColor}}">
+                    </comp-swiper>
+                </list-item>
+                <list-item type="hotGoods">
+                    <comp-category-info goods-list="{{hotGoods}}" goods-title="{{title}}"></comp-category-info>
+                </list-item>
+                <list-item type="lifeGoods">
+                    <comp-category-info goods-list="{{lifeGoods}}" goods-title="{{lifeTitle}}"></comp-category-info>
+                </list-item>
+            </list>
+        </div>
+    </div>
+</template>
+<style>
+    .category{
+        flex-direction: column;
+        width: 750px;
+        height: 100%;
+        align-items: center;
+    }
+    .header{
+        width: 100%;
+        height: 150px;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #f2f2f2;
+        padding: 0 35px;
+    }
+    .header-title{
+        text-align: center;
+        font-size: 36px;
+    }
+    .header image{
+        width: 50px;
+    }
+    .hot-goods{
+        width: 100%;
+        height: 100%;
+        
+    }
+    .content-item{
+        flex-direction: column;
+    }
+</style>
+<script>
+    import fetch from '@system.fetch'
+    import prompt from '@system.prompt'
+    import router from '@system.router'
+    export default {
+        data : {
+            bannerList: [
+                { url: '/assets/swiper_1.jpg' },
+                { url: '/assets/swiper_2.jpg' },
+                { url: '/assets/swiper_1.jpg' },
+                { url: '/assets/swiper_2.jpg' }
+            ],
+            isAutoPlay: true,
+            time: 3000,
+            isIndicator: true,
+            indicatorColor: 'rgba(0, 0, 0, 0.5)',//轮播圆点的填充色
+            indicatorSelectedColor: '#33b4ff',//圆点的选中颜色
+            hotGoods: [],
+            title: '热卖商品',
+            lifeGoods: [
+                { goods_image: '/assets/hufushuang.png', goods_title: '护肤霜', goods_price: '19.9', detail_url: '' },
+                { goods_image: '/assets/gouwudai.png', goods_title: '购物袋', goods_price: '39.9', detail_url: '' },
+                { goods_image: '/assets/hufushuang.png', goods_title: '护肤霜', goods_price: '19.9', detail_url: '' },
+                { goods_image: '/assets/gouwudai.png', goods_title: '购物袋', goods_price: '39.9', detail_url: '' },
+            ],
+            lifeTitle: '生活用品'
+        },
+        onInit() {
+            this.getHotGoods()
+        },
+        getHotGoods() {
+            let self = this;
+            fetch && fetch.fetch({
+                url: 'http://apk.gou.3gtest.gionee.com/api/apk_index/taoHot',
+                success: function (result) {
+                    let res = JSON.parse(result.data);
+                    self.hotGoods = res.data.list;
+                    console.log(JSON.stringify(self.hotGoods))
+                },
+                fail: function (result, code) {
+                    console.log(`handing fail,code=${code}`)
+                }
+            })
+        },
+        search(){
+            prompt.showToast({
+                message: '此功能未做'
+            })
+        },
+        showCategory() {
+            router.push({
+                uri: '/Category'
+            })
+        }
+    }
+</script>

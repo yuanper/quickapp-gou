@@ -1,0 +1,242 @@
+<template>
+    <div class="me">
+        <div class="my-info">
+            <div class="set">
+                <image src="/assets/set.png" @click="route()"></image>
+                <image src="/assets/message.png"></image>
+            </div>
+            <div class="info">
+                <image src="/Common/logo.png"></image>
+                <text class="my-name">zengfp_5075016</text>
+            </div>
+            <list>
+                <list-item class="list" type="order">
+                    <div class="list-title">
+                        <text class="title">我的订单</text>
+                        <text @click="checkAll">查看全部></text>
+                    </div>
+                    <div class="list-info">
+                        <div class="list-info-detail">
+                            <image src="/assets/daifukuan.png"></image>
+                            <text>待付款</text>
+                        </div>
+                        <div class="list-info-detail">
+                            <image src="/assets/daifahuo.png"></image>
+                            <text>待发货</text>
+                        </div>
+                        <div class="list-info-detail">
+                            <image src="/assets/daishouhuo.png"></image>
+                            <text>待收货</text>
+                        </div>
+                        <div class="list-info-detail">
+                            <image src="/assets/daipingjia.png"></image>
+                            <text>待评价</text>
+                        </div>
+                        <div class="list-info-detail">
+                            <image src="/assets/tuikuan.png"></image>
+                            <text>退款/售后</text>
+                        </div>
+                    </div>
+                </list-item>
+                <list-item class="list" type="store">
+                    <div class="list-title">
+                        <text class="title">我的收藏</text>
+                        <text>查看全部></text>
+                    </div>
+                    <div class="list-info">
+                        <div class="list-info-detail">
+                            <image src="/assets/daifukuan.png"></image>
+                            <text>待付款</text>
+                        </div>
+                        <div class="list-info-detail">
+                            <image src="/assets/daifahuo.png"></image>
+                            <text>待发货</text>
+                        </div>
+                        <div class="list-info-detail">
+                            <image src="/assets/daishouhuo.png"></image>
+                            <text>待收货</text>
+                        </div>
+                        <div class="list-info-detail">
+                            <image src="/assets/daipingjia.png"></image>
+                            <text>待评价</text>
+                        </div>
+                        <div class="list-info-detail">
+                            <image src="/assets/tuikuan.png"></image>
+                            <text>退款/售后</text>
+                        </div>
+                    </div>
+                </list-item>
+                <list-item class="list" type="card">
+                    <div class="list-title">
+                        <text class="title">我的购物卡</text>
+                        <text>查看全部></text>
+                    </div>
+                    <div class="list-info">
+                        <div class="list-info-detail">
+                            <image src="/assets/daifukuan.png"></image>
+                            <text>待付款</text>
+                        </div>
+                        <div class="list-info-detail">
+                            <image src="/assets/daifahuo.png"></image>
+                            <text>待发货</text>
+                        </div>
+                        <div class="list-info-detail">
+                            <image src="/assets/daishouhuo.png"></image>
+                            <text>待收货</text>
+                        </div>
+                        <div class="list-info-detail">
+                            <image src="/assets/daipingjia.png"></image>
+                            <text>待评价</text>
+                        </div>
+                        <div class="list-info-detail">
+                            <image src="/assets/tuikuan.png"></image>
+                            <text>退款/售后</text>
+                        </div>
+                    </div>
+                </list-item>
+                <list-item class="list" type="store">
+                    <div class="list-title">
+                        <text class="title">我的足迹</text>
+                        <text>查看全部></text>
+                    </div>
+                    <div class="list-info">
+                        <div class="list-info-detail">
+                            <image src="/assets/daifukuan.png"></image>
+                            <text>待付款</text>
+                        </div>
+                        <div class="list-info-detail">
+                            <image src="/assets/daifahuo.png"></image>
+                            <text>待发货</text>
+                        </div>
+                        <div class="list-info-detail">
+                            <image src="/assets/daishouhuo.png"></image>
+                            <text>待收货</text>
+                        </div>
+                        <div class="list-info-detail">
+                            <image src="/assets/daipingjia.png"></image>
+                            <text>待评价</text>
+                        </div>
+                        <div class="list-info-detail">
+                            <image src="/assets/tuikuan.png"></image>
+                            <text>退款/售后</text>
+                        </div>
+                    </div>
+                </list-item>
+                <list-item class="list" type="gongju">
+                    <div class="list-title">
+                        <text class="title">我的工具</text>
+                        <text>查看全部></text>
+                    </div>
+                    <div class="list-info">
+                        <div class="list-info-detail">
+                            <image src="/assets/daifukuan.png"></image>
+                            <text>待付款</text>
+                        </div>
+                        <div class="list-info-detail">
+                            <image src="/assets/daifahuo.png"></image>
+                            <text>待发货</text>
+                        </div>
+                        <div class="list-info-detail">
+                            <image src="/assets/daishouhuo.png"></image>
+                            <text>待收货</text>
+                        </div>
+                        <div class="list-info-detail">
+                            <image src="/assets/daipingjia.png"></image>
+                            <text>待评价</text>
+                        </div>
+                        <div class="list-info-detail">
+                            <image src="/assets/tuikuan.png"></image>
+                            <text>退款/售后</text>
+                        </div>
+                    </div>
+                </list-item>
+            </list>
+        </div>
+    </div>
+</template>
+<style>
+    .my-info{
+        display: flex;
+        flex-direction: column;
+        width:750px;
+        padding-bottom: 121px;
+    }
+    .set{
+        height: 80px;
+        flex-direction: row;
+        padding: 0 35px;
+        align-items: center;
+        justify-content: space-between; 
+        background-color: #ff1234;
+    }
+    .set image{
+        width: 50px;
+    }
+    .info{
+        height: 120px;
+        flex-direction: row;
+        padding: 0 35px;
+        align-items: center;
+        justify-content: space-between;
+        background-color: #ff1234;
+    }
+    .info image{
+        width: 100px;
+    }
+    .my-name{
+        font-size: 28px;
+        color: #ffffff;
+    }
+    .list{
+        display: flex;
+        flex-direction: column;
+        height: 240px;
+        width: 100%;
+        padding: 0 35px;
+        border-bottom-width: 1px;
+        border-bottom-color: #dedede;
+        border-style: solid;
+        justify-content: center;
+    }
+    .list-title{
+        flex-direction: row;
+        height: 100px;
+        line-height: 100px;
+        justify-content: space-between;
+    }
+    .list-title .title{
+        font-size: 36px;
+        color: #000000;
+    }
+    .list text{
+        font-size: 24px;
+    }
+    .list-info{
+        align-items: center;
+        justify-content: space-between;
+    }
+    .list-info-detail{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    .list-info-detail image{
+        width: 50px;
+    }
+</style>
+<script>
+    import router from '@system.router'
+    export default {
+        route(){
+            router.push({
+                uri: '/Detail'
+            })
+        },
+        checkAll() {
+            router.push({
+                uri: '/Address'
+            })
+        }
+    }
+</script>

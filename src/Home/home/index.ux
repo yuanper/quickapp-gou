@@ -1,0 +1,96 @@
+<import name="list-home" src="../list/index"></import>
+<import name="comp-search" src="../../components/search/index"></import>
+<template>
+    <!-- template里只能有一个根节点 -->
+    <stack class="home">
+        <comp-search></comp-search>
+        <tabs onchange="onChangeTabIndex" class="tab">
+            <tab-bar class="tab-bar" mode="scrollable">
+                <div for="{{tabHeadList}}" class=" {{$idx==currentIndex ? 'active' : 'tab-item-warp'}}">
+                    <text style="color: {{$idx==currentIndex ? theme.color : '#666666'}}" class="tab-item">{{$item.title}}</text>
+                </div>
+            </tab-bar>
+        
+            <tab-content class="tab-content">
+                <div for="{{tabHeadList}}">
+                    <list-home index="{{$idx}}" title="{{$item.title}}" if="{{ renderTabContent($idx) }}"></list-home>
+                </div>
+            </tab-content>
+        </tabs>
+    </stack>
+</template>
+
+<style>
+    .home{
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        width: 750px;
+    }
+    .tab{
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+        margin-top: 200px;
+    }
+
+    .tab-item-warp {
+        width: 20%;
+        height: 100px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    .active{
+        width: 20%;
+        height: 100px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border-bottom-width: 4px;
+        border-style: solid;
+        border-bottom-color: #ff1234;
+    }
+
+    .tab-bar {
+        width: 750px;
+        border-bottom-width: 1px;
+        border-bottom-color: #eeeeee;
+        border-style: solid;
+    }
+</style>
+
+<script>
+    export default {
+        data: {
+            tabHeadList: [
+                {title: "推荐",render: true},
+                {title: "时尚",render: false},
+                {title: "女装",render: false},
+                { title: "男装",render: false},
+                {title: "母婴用品" ,render: false},
+                {title: '电子数码',render: false},
+                {title: '手机电脑',render: false}
+            ],
+            currentIndex: 0,
+            theme: { color: '#ff1234' },
+        },
+        onReady() {
+            this.changeTabIndex(0)
+        },
+        changeTabIndex(index) {
+            const item = Object.assign({}, this.tabHeadList[index])
+            item.render = true
+            this.tabHeadList.splice(index, 1, item)
+        },
+        onChangeTabIndex(evt) {
+            this.currentIndex = evt.index
+            this.changeTabIndex(evt.index)
+        },
+        renderTabContent(index) {
+            return !!this.tabHeadList[index].render
+        }
+    }
+</script>

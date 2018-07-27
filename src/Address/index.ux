@@ -1,0 +1,105 @@
+<template>
+    <div class="address">
+        <input class="address-item" type="text" placeholder="收货人姓名" id="name" onchange="changeName" />
+        <input class="address-item" type="text" placeholder="手机号码" />
+        <input class="address-item" type="text" placeholder="邮政编码" />
+        <div class="select">
+            <select class="city-select" onchange="selectProvince">
+                <option for="province" value="{{$idx}}" class="city-option">{{$item.name}}</option>
+            </select>
+            <select class="city-select" onchange="selectCity">
+                <option for="city" value="{{$idx}}" class="city-option">{{$item.name}}</option>
+            </select>
+            <select class="city-select" onchange="selectChange">
+                <option for="area" value="{{$idx}}" class="city-option">{{$item}}</option>
+            </select>
+        </div>
+        <textarea class="address-item textarea" placeholder="详细地址" ></textarea>
+        <input type="button" value="保存" @click="add" />
+    </div>
+</template>
+<style>
+    .address{
+        width: 750px;
+        flex-direction: column;
+    }
+    .address-item{
+        width: 100%;
+        height: 100px;
+        display: flex;
+        border-bottom-width: 1px;
+        border-style: solid;
+        border-bottom-color: #dddddd;
+        padding: 0 20px;
+        font-size: 30px;
+    }
+    .textarea{
+        height: 160px;
+    }
+    .select{
+        width: 100%;
+        height: 80px;
+        justify-content: space-between;
+        border-bottom-width: 1px;
+        border-bottom-color: #dddddd;
+        border-style: solid;
+    }
+    .city-select{
+        display: flex;
+        width: 30%;
+        flex-grow: 1;
+        justify-content: center;
+        font-size: 30px;
+        padding: 0 15px;
+    }
+    .city-option{
+        height: 80px;
+        text-align: center;
+        font-size: 30px;
+        justify-content: center;
+    }
+</style>
+<script>
+    import fetch from "@system.fetch"
+    import prompt from '@system.prompt'
+    import city from './../assets/city.js'
+    export default {
+        private: {
+            province: [],
+            city: [],
+            area: [],
+            default: 0,
+            name: ''
+        },
+        onInit() {
+            // this.province = city;
+            this.getProvince();
+        },
+        getProvince() {
+           console.log('我执行了');
+           this.province = city;
+           this.city = this.province[this.default].city;
+           this.area = this.city[this.default].area;
+        },
+        selectProvince(evt) {
+            let value = evt.newValue;
+            this.city = this.province[value].city;
+            this.area = this.city[this.default].area;
+            console.log(JSON.stringify(this.city))
+            console.log(JSON.stringify(this.area))
+        },
+        selectCity(e){
+            let index = e.newValue;
+            this.area = this.city[index].area
+        },
+        changeName(evt){
+            this.name = evt.value;
+        },
+        add() {
+           console.log(JSON.stringify(this.name))
+           prompt.showToast({
+               message: '保存成功'
+           })
+        }
+    }
+</script>
