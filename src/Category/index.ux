@@ -1,36 +1,129 @@
 <template>
     <div class="category">
         <div class="search">
-            <text @click="back"> < </text>
-            <image src="/assets/search.png"></image>
+            <image src="/assets/back.png" @click="back"></image>
+            <image src="/assets/search_gray.png"></image>
             <input class="input" type="text" placeholder="polo 男" />
             <text @click="showMenu">...</text>
         </div>
-
+        <div>
+            <list class="nav">
+                <block for="navList">
+                    <list-item class="{{currentIndex === $idx ? 'active' : 'nav-tabs'}}" type="tabs" onclick="showContent($idx)">
+                        <stack>
+                            <div show="{{currentIndex === $idx}}" class="active-tag"></div>
+                            <text class="nav-title">{{$item.title}}</text>
+                        </stack>
+                    </list-item>
+                </block>
+            </list>
+            <div class="content">
+                <div class="content-1">
+                    <list class="content-list">
+                        <block for="lists">
+                            <list-item type="list" class="list-item" onclick="showDetail($item.detail_url)">
+                                <image src="{{$item.image}}"></image>
+                                <text>{{$item.name}}</text>
+                            </list-item>
+                        </block>
+                    </list>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 <style>
-    .category{
+    .category {
         flex-direction: column;
         width: 750px;
         height: 100%;
     }
-    .search{
+
+    .search {
         width: 100%;
         height: 150px;
         padding: 0 35px;
         align-items: center;
         justify-content: space-between;
-        background-color: #f2f2f2;
         border-bottom-width: 1px;
-        border-bottom-color: #666666;
+        border-bottom-color: #f2f2f2;
         border-style: solid;
     }
-    .search image{
+
+    .search image {
         width: 50px;
     }
-    .search input{
+
+    .search input {
         width: 500px;
+        height: 50px;
+        font-size: 24px;
+        border: 1px solid #f2f2f2;
+        background-color: #f2f2f2;
+        border-radius: 50px;
+        padding: 0 15px;
+    }
+
+    .nav {
+        flex-direction: column;
+        height: 100%;
+        width: 200px;
+    }
+
+    .nav-tabs {
+        display: flex;
+        flex-direction: column;
+        width: 200px;
+        height: 100px;
+        background-color: #f2f2f2;
+    }
+
+    .nav-title {
+        display: flex;
+        width: 200px;
+        height: 100px;
+        text-align: center;
+    }
+
+    .active {
+        display: flex;
+        flex-direction: column;
+        width: 200px;
+        height: 100px;
+        background-color: #ffffff;
+    }
+
+    .active-tag {
+        width: 10px;
+        height: 80px;
+        background-color: #ff1234;
+        margin-top: 10px;
+    }
+
+    .content {
+        width: 550px;
+        height: 100%;
+        margin-top: 20px;
+    }
+
+    .content-list {
+        display: flex;
+        flex-direction: column;
+        columns: 3;
+        align-items: center;
+        justify-content: center
+    }
+
+    .list-item {
+        width: 33%;
+        height: 200px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .list-item text {
         font-size: 24px;
     }
 </style>
@@ -39,12 +132,38 @@
     import prompt from '@system.prompt'
     export default {
         data: {
-
+            navList: [
+                { title: '数码' },
+                { title: '数码' },
+                { title: '数码' },
+                { title: '数码' },
+                { title: '数码' },
+                { title: '数码' },
+                { title: '数码' },
+                { title: '数码' },
+                { title: '数码' },
+                { title: '数码' },
+                { title: '数码' },
+                { title: '数码' },
+                { title: '数码' }
+            ],
+            currentIndex: 0,
+            lists: [
+                { image: '/assets/gou_1.jpg_.webp', name: '连衣裙', detail_url: '' },
+                { image: '/assets/gou_2.jpg_.webp', name: '礼服', detail_url: '' },
+                { image: '/assets/gou_3.jpg_.webp', name: '学院风', detail_url: '' },
+                { image: '/assets/gou_1.jpg_.webp', name: '连衣裙', detail_url: '' },
+                { image: '/assets/gou_2.jpg_.webp', name: '礼服', detail_url: '' },
+                { image: '/assets/gou_3.jpg_.webp', name: '学院风', detail_url: '' },
+                { image: '/assets/gou_1.jpg_.webp', name: '连衣裙', detail_url: '' },
+                { image: '/assets/gou_2.jpg_.webp', name: '礼服', detail_url: '' },
+                { image: '/assets/gou_3.jpg_.webp', name: '学院风', detail_url: '' },
+            ]
         },
         onInit() {
 
         },
-        back(){
+        back() {
             router.back()
         },
         showMenu() {
@@ -57,7 +176,7 @@
                 itemColor: '#ff33ff',
                 success: function (data) {
                     console.log('handling success:' + JSON.stringify(data));
-                    if(data.index === 0){
+                    if (data.index === 0) {
                         router.push({
                             uri: '/Home'
                         })
@@ -70,6 +189,13 @@
                     console.log(`handling fail, code = ${code}`)
                 }
             })
+        },
+        showContent(index) {
+            console.log(index)
+            this.currentIndex = index;
+        },
+        showDetail(url) {
+            console.log(url)
         }
     }
 </script>
